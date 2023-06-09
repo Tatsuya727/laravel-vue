@@ -1,6 +1,7 @@
 <script setup>
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
 import { Head } from '@inertiajs/vue3';
+import { nl2br } from '@/common';
 
 defineProps({
     item: Object,
@@ -34,9 +35,7 @@ defineProps({
                                         <div class="p-2 w-full">
                                             <div class="relative">
                                                 <label for="memo" class="leading-7 text-sm text-gray-600">メモ</label>
-                                                <div class="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-indigo-500 focus:bg-white focus:ring-2 focus:ring-indigo-200 h-32 text-base outline-none text-gray-700 py-1 px-3 resize-none leading-6 transition-colors duration-200 ease-in-out">
-                                                    {{ item.memo }}
-                                                </div>
+                                                <div v-html="nl2br(item.memo)" class="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-indigo-500 focus:bg-white focus:ring-2 focus:ring-indigo-200 h-32 text-base outline-none text-gray-700 py-1 px-3 resize-none leading-6 transition-colors duration-200 ease-in-out"></div>
                                             </div>
                                         </div>
                                         <div class="p-2 w-full">

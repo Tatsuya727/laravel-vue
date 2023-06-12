@@ -1,12 +1,12 @@
 <script setup>
 import { ref } from 'vue';
-const isShow = ref(true);
+const showModal = ref(false);
 </script>
 
 <template>
     <div>
         <h1>Modal Title</h1>
         <p>Modal content...</p>
-        <!-- その他必要なモーダル内容をここに追加 -->
+        <button type="button" @click="showModal = false">Close Modal</button>
     </div>
 </template>

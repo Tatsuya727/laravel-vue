@@ -53,6 +53,10 @@ const storePurchase = () => {
 };
 
 const quantity = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9'];
+
+const setCustomerId = (id) => {
+    form.customer_id = id;
+};
 </script>
 
 <template>
@@ -81,7 +85,7 @@ const quantity = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9'];
                                         <div class="p-2 w-full">
                                             <div class="relative">
                                                 <label for="customer" class="leading-7 text-sm text-gray-600">会員名</label>
-                                                <MicroModal />
+                                                <MicroModal @update:customerId="setCustomerId" />
                                                 <div v-if="errors.customer">{{ errors.customer }}</div>
                                             </div>
                                         </div>

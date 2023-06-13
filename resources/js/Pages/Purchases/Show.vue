@@ -1,6 +1,6 @@
 <script setup>
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
-import { Head } from '@inertiajs/vue3';
+import { Head, Link } from '@inertiajs/vue3';
 import { onMounted, reactive, ref, computed } from 'vue';
 import { Inertia } from '@inertiajs/inertia';
 import dayjs from 'dayjs';
@@ -84,8 +84,8 @@ const props = defineProps({
                                                 <div v-if="props.order[0].status == false" class="w-full bg-opacity-50 rounded border border-gray-300 focus:border-indigo-500 focus:bg-white focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out">{{ dayjs(props.order[0].updated_at).format('YYYY/MM/DD') }}</div>
                                             </div>
                                         </div>
-                                        <div class="p-2 w-full">
-                                            <button class="flex mx-auto text-white bg-indigo-500 border-0 py-2 px-8 focus:outline-none hover:bg-indigo-600 rounded text-lg">登録する</button>
+                                        <div v-if="props.order[0].status == true" class="p-2 w-full">
+                                            <Link as="button" :href="route('purchases.edit', { purchase: props.order[0].id })" class="flex mx-auto text-white bg-indigo-500 border-0 py-2 px-8 focus:outline-none hover:bg-indigo-600 rounded text-lg">編集する</Link>
                                         </div>
                                     </div>
                                 </div>

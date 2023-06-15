@@ -1,0 +1,54 @@
+name: Laravel
+
+on:
+    push:
+        branches: [master]
+    pull_request:
+        branches: [master]
+
+jobs:
+    tests:
+        runs-on: ubuntu-latest
+
+        services:
+            mysql:
+                image: mysql:8.0
+                env:
+                    MYSQL_ALLOW_EMPTY_PASSWORD: yes
+                ports:
+                    - 3306
+                options: --health-cmd="mysqladmin ping" --health-interval=10s --health-timeout=5s --health-retries=3
+
+        steps:
+            - name: Checkout code
+              uses: actions/checkout@v2
+
+            - name: Setup PHP
+              uses: shivammathur/setup-php@v2
+              with:
+                  php-version: 8.0
+                  tools: composer:v2, cs2pr
+
+            - name: Install Docker
+              run: sudo apt-get update && sudo apt-get install -y docker-ce docker-ce-cli containerd.io
+
+            - name: Start Docker
+              run: sudo systemctl start docker
+
+            - name: Install Laravel Sail dependencies
+              run: composer install
+
+            - name: Build and start Laravel Sail
+              run: ./vendor/bin/sail up -d
+
+            - name: Copy .env
+              run: cp .env.example .env
+
+            - name: Generate key
+              run: ./vendor/bin/sail artisan key:generate
+
+            - name: Run migrations
+              run: ./vendor/bin/sail artisan migrate
+
+            - name: Run tests
+              run: ./vendor/bin/sail artisan test
